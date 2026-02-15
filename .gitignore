@@ -3,3 +3,5 @@ __pycache__/
 models/
 .env
 .venv
+Assignment_2/.dvc/config
+Assignment_2/client_secret*.json
