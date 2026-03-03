@@ -1,0 +1,9 @@
+[run]
+source = .
+concurrency = thread
+sigterm = true
+
+[report]
+omit =
+    */__pycache__/*
+    */site-packages/*
