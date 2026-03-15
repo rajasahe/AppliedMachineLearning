@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Pre-commit hook to run tests before committing to the 'main' branch.
+
+# Get the current branch name
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch_name" = "main" ]; then
+    echo "Committing to the 'main' branch. Running test.py..."
+    
+    # Navigate to the Assignment_4 directory where the test resides
+    # Using cd here only affects the current sub-shell of this script
+    cd Assignment_4 || exit 1
+    
+    # Run pytest on test.py
+    pytest test.py
+    
+    # Capture the exit status of pytest
+    pytest_exit_code=$?
+    
+    # If the tests failed, abort the commit
+    if [ $pytest_exit_code -ne 0 ]; then
+        echo "Tests failed! Aborting commit."
+        echo "Please fix the failing tests before committing to main."
+        exit 1
+    fi
+    
+    echo "Tests passed! Proceeding with the commit."
+else
+    echo "Not on the 'main' branch ($branch_name). Skipping tests."
+fi
